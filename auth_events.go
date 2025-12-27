@@ -1,8 +1,8 @@
 package steam
 
 import (
-	"github.com/Philipp15b/go-steam/v3/protocol/steamlang"
-	"github.com/Philipp15b/go-steam/v3/steamid"
+	"github.com/paralin/go-steam/protocol/steamlang"
+	"github.com/paralin/go-steam/steamid"
 )
 
 type LoggedOnEvent struct {
@@ -41,6 +41,22 @@ type LoggedOffEvent struct {
 
 type MachineAuthUpdateEvent struct {
 	Hash []byte
+}
+
+// MachineAuthTokenEvent is fired when a new machine auth token is received.
+// This is the new JWT-based authentication token that replaces sentry hashes.
+// You should save this token and use it for future logins.
+type MachineAuthTokenEvent struct {
+	Token string
+}
+
+// NewAuthenticationResultEvent is fired when authentication via new protocol completes.
+// This event contains all authentication tokens returned by Steam's new auth system.
+type NewAuthenticationResultEvent struct {
+	RefreshToken     string // Long-lived token for refreshing access tokens
+	AccessToken      string // Short-lived token for API calls
+	MachineAuthToken string // JWT token for remember-this-device functionality
+	AccountName      string // Steam account name
 }
 
 type AccountInfoEvent struct {

@@ -16,8 +16,8 @@ You can also find a running example in the `gsbot` package.
 		"io/ioutil"
 		"log"
 
-		"github.com/Philipp15b/go-steam/v3"
-		"github.com/Philipp15b/go-steam/v3/protocol/steamlang"
+		"github.com/paralin/go-steam"
+		"github.com/paralin/go-steam/protocol/steamlang"
 	)
 
 	func main() {

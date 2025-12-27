@@ -3,8 +3,8 @@ package gamecoordinator
 import (
 	"io"
 
-	"github.com/Philipp15b/go-steam/v3/protocol"
-	"github.com/Philipp15b/go-steam/v3/protocol/steamlang"
+	"github.com/paralin/go-steam/protocol"
+	"github.com/paralin/go-steam/protocol/steamlang"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -27,13 +27,22 @@ type GCMsgProtobuf struct {
 	Body   proto.Message
 }
 
-func NewGCMsgProtobuf(appId, msgType uint32, body proto.Message) *GCMsgProtobuf {
+func NewGCMsgProtobuf(appId, msgType uint32, body interface{}) *GCMsgProtobuf {
 	hdr := steamlang.NewMsgGCHdrProtoBuf()
 	hdr.Msg = msgType
+
+	// 将 body 转换为 proto.Message
+	// 由于 github.com/golang/protobuf v1.5+ 内部使用 google.golang.org/protobuf
+	// 所以旧版的 protobuf 消息实际上也实现了新版接口
+	msg, ok := body.(proto.Message)
+	if !ok {
+		panic("body must be a protobuf message")
+	}
+
 	return &GCMsgProtobuf{
 		AppId:  appId,
 		Header: hdr,
-		Body:   body,
+		Body:   msg,
 	}
 }
 
