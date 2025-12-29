@@ -1,6 +1,7 @@
 package steam
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -118,6 +119,7 @@ var CMServers = []string{
 func GetRandomCM() *netutil.PortAddr {
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	addr := netutil.ParsePortAddr(CMServers[rng.Int31n(int32(len(CMServers)))])
+	fmt.Println("----GetRandomCM----", addr)
 	if addr == nil {
 		panic("invalid address in CMServers slice")
 	}

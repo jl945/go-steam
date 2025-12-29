@@ -36,7 +36,7 @@ func getOsType() uint32 {
 	default:
 		osType = steamlang.EOSType_WinUnknown // 0
 	}
-	fmt.Println("getOsType----", int32(osType))
+	//fmt.Println("getOsType----", int32(osType))
 
 	// Convert signed int32 to uint32 (Steam accepts both signed and unsigned)
 	return uint32(osType)
@@ -117,7 +117,7 @@ func (a *Auth) LogOn(details *LogOnDetails) {
 	}
 
 	logon := new(protobuf.CMsgClientLogon)
-	fmt.Println("---details.AccessToken--", details.AccessToken)
+	//fmt.Println("---details.AccessToken--", details.AccessToken)
 	// Prefer AccessToken (refresh token) for new authentication flow
 	if details.AccessToken != "" {
 		// 参考 node-steam-user 09-logon.js:84, 124-135
@@ -165,7 +165,7 @@ func (a *Auth) LogOn(details *LogOnDetails) {
 	logon.ProtocolVersion = proto.Uint32(steamlang.MsgClientLogon_CurrentProtocol)
 	logon.ClientOsType = proto.Uint32(getOsType()) // 参考 node-steam-user 09-logon.js:95
 
-	fmt.Println("Before final print - AccessToken:", *logon.AccessToken)
+	//fmt.Println("Before final print - AccessToken:", *logon.AccessToken)
 
 	// Prefer MachineAuthToken over SentryFileHash (new vs old mechanism)
 	// Note: Until protobuf is updated to support guard_data field,
@@ -189,10 +189,10 @@ func (a *Auth) LogOn(details *LogOnDetails) {
 	}
 
 	// Debug: Check AccessToken right before serialization
-	if logon.AccessToken != nil {
-		fmt.Println("AccessToken before String():", *logon.AccessToken)
-	}
-	fmt.Println("-----", logon.String())
+	//if logon.AccessToken != nil {
+	//	fmt.Println("AccessToken before String():", *logon.AccessToken)
+	//}
+	//fmt.Println("-----", logon.String())
 
 	// Debug: Check if AccessToken field is set
 	fmt.Printf("Has AccessToken field: %v\n", logon.AccessToken != nil)

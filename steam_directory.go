@@ -65,6 +65,7 @@ func (sd *steamDirectory) GetRandomCM() *netutil.PortAddr {
 	}
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	addr := netutil.ParsePortAddr(sd.servers[rng.Int31n(int32(len(sd.servers)))])
+	fmt.Println("GetRandomCM---", addr)
 	return addr
 }
 
